@@ -4,11 +4,47 @@ conexao = mysql.connector.connect(
     host="localhost",
     user="root",
     password="senhasegura123",
-    database="aloud",
+    database="aloud2",
 )
 
 
 cursor = conexao.cursor()
+
+
+class Tabela:
+    def __init__(self, cursor, conexao):
+        self.conexao = conexao
+        self.cursor = cursor
+
+    def criar_tabela_usuario(self):
+        comando = "CREATE TABLE usuario (id_usuario INT AUTO_INCREMENT PRIMARY KEY, nome VARCHAR(50), sobrenome VARCHAR(100), email VARCHAR(255), senha VARCHAR(8))"
+        self.cursor.execute(comando)
+        self.conexao.commit()
+
+    def criar_tabela_endereco(self):
+        comando = "CREATE TABLE endereco (id_endereco INT AUTO_INCREMENT PRIMARY KEY, cidade VARCHAR(50), UF VARCHAR(50), CEP VARCHAR(10), logradouro VARCHAR(50), numero INT, complemento VARCHAR(50))"
+        self.cursor.execute(comando)
+        self.conexao.commit()
+
+    def criar_tabela_anuncio(self):
+        comando = "CREATE TABLE anuncio (id_anuncio INT AUTO_INCREMENT PRIMARY KEY, cpf_cnpj VARCHAR(20), FOREIGN KEY (cpf_cnpj) REFERENCES usuario_vendedor(cpf_cnpj), titulo_anuncio VARCHAR(100), descricao VARCHAR(255), preco FLOAT(10,2), foto_produto VARCHAR(255), fabricante VARCHAR(50), quantidade_produto INT, status_aprovacao VARCHAR(10), estado_novo BOOLEAN)"
+        self.cursor.execute(comando)
+        self.conexao.commit()
+
+    def criar_tabela_usuario_vendedor(self):
+        comando = "CREATE TABLE usuario_vendedor (cpf_cnpj VARCHAR(20) PRIMARY KEY, data_nascimento DATE, foto_perfil VARCHAR(255), id_usuario INT, FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario), id_endereco INT, FOREIGN KEY (id_endereco) REFERENCES endereco(id_endereco))"
+        self.cursor.execute(comando)
+        self.conexao.commit()
+
+    def criar_tabela_compra(self):
+        comando = "CREATE TABLE compra (id_compra INT AUTO_INCREMENT PRIMARY KEY, id_usuario INT, FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario), id_endereco INT, FOREIGN KEY (id_endereco) REFERENCES endereco(id_endereco), id_anuncio INT, FOREIGN KEY (id_anuncio) REFERENCES anuncio(id_anuncio), valor_total FLOAT(10,2), data_compra DATE, forma_de_pag VARCHAR(50), modo_envio VARCHAR(50))"
+        self.cursor.execute(comando)
+        self.conexao.commit()
+
+    def criar_tabela_compra_anuncio(self):
+        comando = "CREATE TABLE compra_anuncio (id_compra INT, FOREIGN KEY (id_compra) REFERENCES compra(id_compra), id_anuncio INT, FOREIGN KEY (id_anuncio) REFERENCES anuncio(id_anuncio))"
+        self.cursor.execute(comando)
+        self.conexao.commit()
 
 
 class Endereco:
@@ -149,10 +185,18 @@ class Usuario:
         # comando = f"UPDATE "
 
 
-usuario = Usuario(cursor, conexao)
+# usuario = Usuario(cursor, conexao)
 
-usuario.cadastrar_usuario()
+# usuario.cadastrar_usuario()
 
+table = Tabela(cursor, conexao)
+
+table.criar_tabela_usuario()
+table.criar_tabela_endereco()
+table.criar_tabela_usuario_vendedor()
+table.criar_tabela_anuncio()
+table.criar_tabela_compra()
+table.criar_tabela_compra_anuncio()
 
 cursor.close()
 conexao.close()
