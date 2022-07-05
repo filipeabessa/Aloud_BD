@@ -77,6 +77,15 @@ class Usuario:
     def __str__(self):
         return self.nome
 
+    def login(self):
+        pass
+
+    def editar_usuario_comum_banco(self):
+        pass
+
+    def editar_usuario_vendedor_banco(self):
+        pass
+
     def cadastrar_usuario_comum_banco(self, nome, sobrenome, email, senha):
         comando = f'INSERT INTO usuario (nome, sobrenome, email, senha) VALUES ("{nome}", "{sobrenome}", "{email}", "{senha}")'
 
