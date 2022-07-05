@@ -27,7 +27,7 @@ class Tabela:
         self.conexao.commit()
 
     def criar_tabela_anuncio(self):
-        comando = "CREATE TABLE anuncio (id_anuncio INT AUTO_INCREMENT PRIMARY KEY, cpf_cnpj VARCHAR(20), FOREIGN KEY (cpf_cnpj) REFERENCES usuario_vendedor(cpf_cnpj), titulo_anuncio VARCHAR(100), descricao VARCHAR(255), preco FLOAT(10,2), foto_produto VARCHAR(255), fabricante VARCHAR(50), quantidade_produto INT, status_aprovacao VARCHAR(10), estado_novo BOOLEAN)"
+        comando = "CREATE TABLE anuncio (id_anuncio INT AUTO_INCREMENT PRIMARY K VARCHAR(20), FOREIGN KEY (cpf_cnpj) REFERENCES usuario_vendedor(cpf_cnpj), titulo_anuncio VARCHAR(100), descricao VARCHAR(255), preco FLOAT(10,2), foto_produto VARCHAR(255), fabricante VARCHAR(50), quantidade_produto INT, status_aprovacao VARCHAR(10), estado_novo BOOLEAN)"
         self.cursor.execute(comando)
         self.conexao.commit()
 
@@ -201,15 +201,41 @@ class Anuncio:
         self.cursor = cursor
         self.conexao = conexao
 
-        self.cpf_cnpj = ""
-        self.titulo_anuncio = ""
-        self.descricao = ""
-        self.preco = 0.0
-        self.foto_produto = ""
-        self.fabricante = ""
-        self.quantidade_produto = ""
-        self.status_aprovacao = ""
-        self.estado_novo = ""
+    def criar_anuncio(
+        self,
+        cpf_cnpj_vendedor,
+        titulo_anuncio,
+        descricao,
+        preco,
+        foto_produto,
+        fabricante,
+        quantidade_produto,
+        status_aprovacao,
+        estado_novo,
+    ):
+
+        comando = f'INSERT INTO anuncio (cpf_cnpj, titulo_anuncio, descricao, preco, foto_produto, fabricante, quantidade_produto, status_aprovacao, estado_novo) VALUES ("{cpf_cnpj_vendedor}", "{titulo_anuncio}", "{descricao}", "{preco}", "{foto_produto}", "{fabricante}", "{quantidade_produto}", "{status_aprovacao}", "{estado_novo}")'
+
+        self.cursor.execute(comando)
+        self.conexao.commit()
+
+    def editar_anuncio(
+        self,
+        id_anuncio,
+        titulo_anuncio,
+        descricao,
+        preco,
+        foto_produto,
+        fabricante,
+        quantidade_produto,
+        status_aprovacao,
+        estado_novo,
+    ):
+
+        comando = f'UPDATE anuncio SET "titulo_anuncio = "{titulo_anuncio}", descricao = "{descricao}", preco = "{preco}", foto_produto = "{foto_produto}", fabricante = "{fabricante}", quantidade_produto = "{quantidade_produto}", status_aprovacao = "{status_aprovacao}", estado_novo = "{estado_novo}" WHERE id_anuncio = "{id_anuncio}"'
+
+        self.cursor.execute(comando)
+        self.conexao.commit()
 
 
 usuario = Usuario(cursor, conexao)
