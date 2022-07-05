@@ -46,6 +46,17 @@ class Tabela:
         self.cursor.execute(comando)
         self.conexao.commit()
 
+    def listar_usuarios(self):
+        comando = "SELECT * FROM usuario"
+        self.cursor.execute(comando)
+        lista_usuarios = self.cursor.fetchall()
+
+        print("\nLista de usuários:")
+        for usuario in lista_usuarios:
+            print(
+                f"ID_usuario: {usuario[0]}, Nome: {usuario[1]} {usuario[2]}, Email: {usuario[3]}"
+            )
+
 
 class Endereco:
     def __init__(self, cursor, conexao):
@@ -185,18 +196,47 @@ class Usuario:
         # comando = f"UPDATE "
 
 
-# usuario = Usuario(cursor, conexao)
+class Anuncio:
+    def __init__(self, cursor, conexao):
+        self.cursor = cursor
+        self.conexao = conexao
+
+        self.cpf_cnpj = ""
+        self.titulo_anuncio = ""
+        self.descricao = ""
+        self.preco = 0.0
+        self.foto_produto = ""
+        self.fabricante = ""
+        self.quantidade_produto = ""
+        self.status_aprovacao = ""
+        self.estado_novo = ""
+
+
+usuario = Usuario(cursor, conexao)
+tabela = Tabela(cursor, conexao)
 
 # usuario.cadastrar_usuario()
+tabela.listar_usuarios()
 
-table = Tabela(cursor, conexao)
+print("Bem-vindo à Aloud! O que você deseja fazer? \n")
+resposta = input("1 - Cadastrar usuário\n2 - Login\n3 - Buscar produtos/serviços\n")
 
-table.criar_tabela_usuario()
-table.criar_tabela_endereco()
-table.criar_tabela_usuario_vendedor()
-table.criar_tabela_anuncio()
-table.criar_tabela_compra()
-table.criar_tabela_compra_anuncio()
+if resposta == "1":
+    usuario.cadastrar_usuario()
+
+elif resposta == "2":
+    print("Ainda não implementado")
+
+elif resposta == "3":
+    print("Ainda não implementado")
+
+
+resposta_2 = input('Deseja listar usuários? (responda com "sim" ou "não")')
+if resposta_2 == "sim":
+    tabela.listar_usuarios()
+
+print("\nObrigado por usar a Aloud!")
+
 
 cursor.close()
 conexao.close()
