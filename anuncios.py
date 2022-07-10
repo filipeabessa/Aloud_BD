@@ -38,3 +38,20 @@ class Anuncio:
 
         self.cursor.execute(comando)
         self.conexao.commit()
+
+    def buscar_anuncios(self, palavra_chave=""):
+        if palavra_chave == "":
+            comando = "SELECT * FROM anuncio"
+        else:
+            comando = (
+                f'SELECT * FROM anuncio WHERE titulo_anuncio LIKE "%{palavra_chave}%"'
+            )
+
+        self.cursor.execute(comando)
+        anuncios = self.cursor.fetchall()
+        for anuncio in anuncios:
+            print(
+                f"ID: {anuncio[0]}\nTítulo: {anuncio[1]}\nPreço: {anuncio[3]}\nFoto: {anuncio[4]}\nQuantidade: {anuncio[6]}\nEstado: {anuncio[8]}\n"
+            )
+            print("\n\n\n")
+        return

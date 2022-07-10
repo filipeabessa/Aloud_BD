@@ -15,6 +15,7 @@ class Usuario:
         self.cpf_cnpj = ""
         self.data_nascimento = ""
         self.foto_perfil = ""
+        self.logado = False
 
         self.endereco = Endereco(cursor, conexao)
 
@@ -22,7 +23,19 @@ class Usuario:
         return self.nome
 
     def login(self):
-        pass
+        print("Login: \n")
+        self.email = input("Email: ")
+        self.senha = input("Senha: ")
+
+        comando = f'SELECT * FROM usuario WHERE email = "{self.email}" AND senha = "{self.senha}"'
+
+        self.cursor.execute(comando)
+
+        if len(self.cursor.fetchall()) > 0:
+            print("Login realizado com sucesso!")
+            self.logado = True
+        else:
+            print("Email ou senha incorretos!")
 
     def editar_usuario_comum_banco(self):
         pass
