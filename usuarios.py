@@ -46,13 +46,11 @@ class Usuario:
             self.sobrenome = infos_usuario[0][2]
             self.email = infos_usuario[0][3]
 
-            print(self.ID_usuario)
             comando = (
                 f'SELECT * FROM usuario_vendedor WHERE id_usuario = "{self.ID_usuario}"'
             )
             self.cursor.execute(comando)
             infos_usuario_vendedor = self.cursor.fetchall()
-            print(infos_usuario_vendedor)
 
             if len(infos_usuario_vendedor) > 0:
                 self.eh_vendedor = True
@@ -64,7 +62,7 @@ class Usuario:
             else:
                 self.eh_vendedor = False
 
-            print("Login realizado com sucesso!")
+            print("\nLogin realizado com sucesso!\n")
             self.logado = True
         else:
             print("\nEmail ou senha incorretos!\n")

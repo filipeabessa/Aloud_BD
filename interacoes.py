@@ -24,13 +24,13 @@ class Interacoes:
 
     def chamar_interacaos_vendedor(self):
         resposta = input(
-            "1 - Criar anuncio\n2 - Editar Anuncio\n3 - Buscar produtos/serviços\n4 - Visualizar meus anuncios\nExcluir anuncio\n"
+            "1 - Criar anuncio\n2 - Editar Anuncio\n3 - Buscar produtos/serviços\n4 - Visualizar meus anuncios\n5 - Excluir anuncio\n"
         )
         if resposta == "1":
             self.anuncios.criar_anuncio()
 
         elif resposta == "2":
-            self.anuncios.usuarios.editar_anuncio()
+            self.anuncios.editar_anuncio(self.usuarios.receber_cpf_cnpj())
 
         elif resposta == "3":
             self.anuncios.buscar_anuncios()
