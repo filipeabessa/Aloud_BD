@@ -1,25 +1,34 @@
 class Anuncio:
-    def __init__(self, cursor, conexao):
+    def __init__(self, cursor, conexao, database, usuarios):
         self.cursor = cursor
         self.conexao = conexao
+        self.database = database
+        self.usuarios = usuarios
 
-    def criar_anuncio(
-        self,
-        cpf_cnpj_vendedor,
-        titulo_anuncio,
-        descricao,
-        preco,
-        foto_produto,
-        fabricante,
-        quantidade_produto,
-        status_aprovacao,
-        estado_novo,
-    ):
+    def criar_anuncio(self):
+        cpf_cnpj = self.usuarios.cpf_cnpj
+        titulo_anuncio = input("Digite o título do anúncio: ")
+        descricao = input("Digite a descrição do anúncio: ")
+        preco = input("Digite o preço do anúncio: ")
+        foto_produto = input("Digite o link da foto do anúncio: ")
+        fabricante = input("Digite o fabricante do produto: ")
+        quantidade_produto = input("Digite a quantidade do produto: ")
+        estado_novo = input(
+            'Digite o estado do produto ("1" para novo e "2" para usado): '
+        )
+        status_aprovacao = "Aprovado"
 
-        comando = f'INSERT INTO anuncio (cpf_cnpj, titulo_anuncio, descricao, preco, foto_produto, fabricante, quantidade_produto, status_aprovacao, estado_novo) VALUES ("{cpf_cnpj_vendedor}", "{titulo_anuncio}", "{descricao}", "{preco}", "{foto_produto}", "{fabricante}", "{quantidade_produto}", "{status_aprovacao}", "{estado_novo}")'
-
-        self.cursor.execute(comando)
-        self.conexao.commit()
+        self.database.criar_anuncio(
+            cpf_cnpj,
+            titulo_anuncio,
+            descricao,
+            preco,
+            foto_produto,
+            fabricante,
+            quantidade_produto,
+            status_aprovacao,
+            estado_novo,
+        )
 
     def editar_anuncio(
         self,
