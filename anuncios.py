@@ -57,6 +57,12 @@ class Anuncio:
             estado_novo,
         )
 
+    def excluir_anuncio(self, cpf_cnpj):
+        self.listar_anuncios_vendedor_id_titulo(cpf_cnpj)
+
+        id_anuncio = input("Digite o ID do anúncio que deseja excluir: ")
+        self.database.excluir_anuncio(id_anuncio)
+
     def formatar_estado_novo_string(self, estado_novo):
         if estado_novo == 1:
             return "Novo"

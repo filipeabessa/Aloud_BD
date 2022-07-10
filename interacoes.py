@@ -37,3 +37,6 @@ class Interacoes:
 
         elif resposta == "4":
             self.anuncios.listar_anuncios_vendedor(self.usuarios.receber_cpf_cnpj())
+
+        elif resposta == "5":
+            self.anuncios.excluir_anuncio(self.usuarios.receber_cpf_cnpj())

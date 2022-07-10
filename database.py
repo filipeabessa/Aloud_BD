@@ -99,6 +99,12 @@ class Database:
         self.cursor.execute(comando)
         self.conexao.commit()
 
+    def excluir_anuncio(self, id_anuncio):
+        comando = f'DELETE FROM anuncio WHERE ID_anuncio = "{id_anuncio}"'
+
+        self.cursor.execute(comando)
+        self.conexao.commit()
+
     def listar_anuncios_vendedor(self, cpf_cnpj):
         comando = f'SELECT * FROM anuncio WHERE cpf_cnpj = "{cpf_cnpj}"'
 
