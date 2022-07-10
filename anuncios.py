@@ -48,6 +48,12 @@ class Anuncio:
         self.cursor.execute(comando)
         self.conexao.commit()
 
+    def formatar_estado_novo_string(self, estado_novo):
+        if estado_novo == 1:
+            return "Novo"
+        else:
+            return "Usado"
+
     def buscar_anuncios(self, palavra_chave=""):
         if palavra_chave == "":
             comando = "SELECT * FROM anuncio"
@@ -60,17 +66,19 @@ class Anuncio:
         anuncios = self.cursor.fetchall()
         for anuncio in anuncios:
             print(
-                f"ID: {anuncio[0]}\nTítulo: {anuncio[1]}\nPreço: {anuncio[3]}\nFoto: {anuncio[4]}\nQuantidade: {anuncio[6]}\nEstado: {anuncio[8]}\n"
+                f"ID: {anuncio[0]}\nTítulo: {anuncio[2]}\nPreço: {anuncio[4]}\nQuantidade: {anuncio[7]}"
             )
+            print(f"Estado: {self.formatar_estado_novo_string(anuncio[9])}")
             print("\n\n\n")
         return
 
-    def listar_anuncios_vendedor(self):
+    def listar_anuncios_vendedor(self, cpf_cnpj):
         print("Seus anúncios:\n")
-        lista_anuncios = self.database.listar_anuncios_vendedor(self.usuarios.cpf_cnpj)
+        lista_anuncios = self.database.listar_anuncios_vendedor(cpf_cnpj)
 
         for anuncio in lista_anuncios:
             print(
-                f"ID: {anuncio[0]}\nTítulo: {anuncio[1]}\nPreço: {anuncio[3]}\nQuantidade: {anuncio[6]}\nEstado: {anuncio[8]}\n"
+                f"ID: {anuncio[0]}\nTítulo: {anuncio[2]}\nPreço: {anuncio[4]}\nQuantidade: {anuncio[7]}"
             )
+            print(f"Estado: {self.formatar_estado_novo_string(anuncio[9])}")
             print("\n\n\n")
