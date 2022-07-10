@@ -15,7 +15,7 @@ conexao = mysql.connector.connect(
 cursor = conexao.cursor()
 
 database = Database(cursor, conexao)
-usuarios = Usuario(cursor, conexao)
+usuarios = Usuario(cursor, conexao, database)
 anuncios = Anuncio(cursor, conexao, database, usuarios)
 interacoes = Interacoes(usuarios, anuncios)
 

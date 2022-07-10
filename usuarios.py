@@ -2,9 +2,10 @@ from endereco import Endereco
 
 
 class Usuario:
-    def __init__(self, cursor, conexao):
+    def __init__(self, cursor, conexao, database):
         self.cursor = cursor
         self.conexao = conexao
+        self.database = database
 
         self.nome = ""
         self.sobrenome = ""
@@ -18,7 +19,7 @@ class Usuario:
         self.logado = False
         self.eh_vendedor = False
 
-        self.endereco = Endereco(cursor, conexao)
+        self.endereco = Endereco(cursor, conexao, database)
 
     def __str__(self):
         return self.nome
@@ -118,4 +119,5 @@ class Usuario:
         self.email = email
         self.senha = senha
 
-        # comando = f"UPDATE "
+    def editar_endereco(self):
+        self.endereco.editar_endereco(self.ID_endereco)

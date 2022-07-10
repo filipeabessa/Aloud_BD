@@ -24,7 +24,7 @@ class Interacoes:
 
     def chamar_interacaos_vendedor(self):
         resposta = input(
-            "1 - Criar anuncio\n2 - Editar Anuncio\n3 - Buscar produtos/serviços\n4 - Visualizar meus anuncios\n5 - Excluir anuncio\n"
+            "1 - Criar anuncio\n2 - Editar Anuncio\n3 - Buscar produtos/serviços\n4 - Visualizar meus anuncios\n5 - Excluir anuncio\n6 - Editar endereco\n7 - Sair\n"
         )
         if resposta == "1":
             self.anuncios.criar_anuncio()
@@ -40,3 +40,10 @@ class Interacoes:
 
         elif resposta == "5":
             self.anuncios.excluir_anuncio(self.usuarios.receber_cpf_cnpj())
+
+        elif resposta == "6":
+            self.usuarios.editar_endereco()
+
+        elif resposta == "7":
+            print("\nObrigado por usar a Aloud!")
+            return

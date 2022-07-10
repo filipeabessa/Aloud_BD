@@ -117,3 +117,11 @@ class Database:
         comando = f'INSERT INTO endereco (logradouro, numero, complemento, bairro, cidade, UF, CEP) VALUES ("{logradouro}", "{numero}", "{complemento}", "{bairro}", "{cidade}", "{UF}", "{cep}")'
         self.cursor.execute(comando)
         self.conexao.commit()
+
+    def editar_endereco(
+        self, ID_endereco, logradouro, numero, complemento, bairro, cidade, UF, cep
+    ):
+        comando = f'UPDATE endereco SET logradouro = "{logradouro}", numero = "{numero}", complemento = "{complemento}", bairro = "{bairro}", cidade = "{cidade}", UF = "{UF}", CEP = "{cep}" WHERE ID_endereco = "{ID_endereco}"'
+
+        self.cursor.execute(comando)
+        self.conexao.commit()
