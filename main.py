@@ -14,11 +14,14 @@ conexao = mysql.connector.connect(
 
 cursor = conexao.cursor()
 
-usuarios = Usuario(cursor, conexao)
 database = Database(cursor, conexao)
-anuncios = Anuncio(cursor, conexao)
-interacoes = Interacoes(usuarios)
+usuarios = Usuario(cursor, conexao)
+anuncios = Anuncio(cursor, conexao, database, usuarios)
+interacoes = Interacoes(usuarios, anuncios)
 
+interacoes.chamar_boas_vindas()
+interacoes.chamar_menu_inicial()
+interacoes.chamar_interacaos_vendedor()
 
 cursor.close()
 conexao.close()
