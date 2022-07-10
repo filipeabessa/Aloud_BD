@@ -80,3 +80,9 @@ class Database:
 
         self.cursor.execute(comando)
         self.conexao.commit()
+
+    def listar_anuncios_vendedor(self, cpf_cnpj):
+        comando = f'SELECT * FROM anuncio WHERE cpf_cnpj = "{cpf_cnpj}"'
+
+        self.cursor.execute(comando)
+        return self.cursor.fetchall()

@@ -21,7 +21,12 @@ interacoes = Interacoes(usuarios, anuncios)
 
 interacoes.chamar_boas_vindas()
 interacoes.chamar_menu_inicial()
-interacoes.chamar_interacaos_vendedor()
+
+if usuarios.verificar_logado() == True:
+    interacoes.chamar_interacaos_vendedor()
+
+else:
+    interacoes.chamar_menu_inicial()
 
 cursor.close()
 conexao.close()

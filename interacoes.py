@@ -36,4 +36,4 @@ class Interacoes:
             self.anuncios.buscar_anuncios()
 
         elif resposta == "4":
-            print("Falta implementar")
+            self.anuncios.listar_anuncios_vendedor(self.usuarios.receber_cpf_cnpj())

@@ -23,6 +23,12 @@ class Usuario:
     def __str__(self):
         return self.nome
 
+    def receber_cpf_cnpj(self):
+        return self.cpf_cnpj
+
+    def verificar_logado(self):
+        return self.logado
+
     def login(self):
         print("Login: \n")
         self.email = input("Email: ")
@@ -61,7 +67,7 @@ class Usuario:
             print("Login realizado com sucesso!")
             self.logado = True
         else:
-            print("Email ou senha incorretos!")
+            print("\nEmail ou senha incorretos!\n")
 
     def cadastrar_usuario(self):
         print("Cadastro de usuário:\n")

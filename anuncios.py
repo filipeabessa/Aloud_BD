@@ -64,3 +64,13 @@ class Anuncio:
             )
             print("\n\n\n")
         return
+
+    def listar_anuncios_vendedor(self):
+        print("Seus anúncios:\n")
+        lista_anuncios = self.database.listar_anuncios_vendedor(self.usuarios.cpf_cnpj)
+
+        for anuncio in lista_anuncios:
+            print(
+                f"ID: {anuncio[0]}\nTítulo: {anuncio[1]}\nPreço: {anuncio[3]}\nQuantidade: {anuncio[6]}\nEstado: {anuncio[8]}\n"
+            )
+            print("\n\n\n")
