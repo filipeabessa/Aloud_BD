@@ -9,7 +9,7 @@ class Database:
         self.conexao.commit()
 
     def criar_tabela_endereco(self):
-        comando = "CREATE TABLE endereco (id_endereco INT AUTO_INCREMENT PRIMARY KEY, cidade VARCHAR(50), UF VARCHAR(50), CEP VARCHAR(10), logradouro VARCHAR(50), numero INT, complemento VARCHAR(50))"
+        comando = "CREATE TABLE endereco (id_endereco INT AUTO_INCREMENT PRIMARY KEY, cidade VARCHAR(50), UF VARCHAR(50), CEP VARCHAR(10), logradouro VARCHAR(50), numero INT, complemento VARCHAR(50), bairro VARCHAR(50))"
         self.cursor.execute(comando)
         self.conexao.commit()
 
@@ -43,3 +43,20 @@ class Database:
             print(
                 f"ID_usuario: {usuario[0]}, Nome: {usuario[1]} {usuario[2]}, Email: {usuario[3]}"
             )
+
+    def criar_anuncio(
+        self,
+        cpf_cnpj_vendedor,
+        titulo_anuncio,
+        descricao,
+        preco,
+        foto_produto,
+        fabricante,
+        quantidade_produto,
+        status_aprovacao,
+        estado_novo,
+    ):
+        comando = f'INSERT INTO anuncio (cpf_cnpj, titulo_anuncio, descricao, preco, foto_produto, fabricante, quantidade_produto, status_aprovacao, estado_novo) VALUES ("{cpf_cnpj_vendedor}", "{titulo_anuncio}", "{descricao}", "{preco}", "{foto_produto}", "{fabricante}", "{quantidade_produto}", "{status_aprovacao}", "{estado_novo}")'
+
+        self.cursor.execute(comando)
+        self.conexao.commit()
