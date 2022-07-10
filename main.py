@@ -20,13 +20,13 @@ anuncios = Anuncio(cursor, conexao, database, usuarios)
 interacoes = Interacoes(usuarios, anuncios)
 
 interacoes.chamar_boas_vindas()
-interacoes.chamar_menu_inicial()
-
-if usuarios.verificar_logado() == True:
-    interacoes.chamar_interacaos_vendedor()
-
-else:
+while usuarios.verificar_logado() == False:
     interacoes.chamar_menu_inicial()
+    if usuarios.verificar_logado() == True:
+        break
+
+interacoes.chamar_interacaos_vendedor()
+
 
 cursor.close()
 conexao.close()
