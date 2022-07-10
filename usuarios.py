@@ -63,26 +63,6 @@ class Usuario:
         else:
             print("Email ou senha incorretos!")
 
-    def editar_usuario_comum_banco(self):
-        pass
-
-    def editar_usuario_vendedor_banco(self):
-        pass
-
-    def cadastrar_usuario_comum_banco(self, nome, sobrenome, email, senha):
-        comando = f'INSERT INTO usuario (nome, sobrenome, email, senha) VALUES ("{nome}", "{sobrenome}", "{email}", "{senha}")'
-
-        self.cursor.execute(comando)
-        self.conexao.commit()
-
-    def cadastrar_usuario_vendedor_banco(
-        self, cpf_cnpj, data_nascimento, foto_perfil, id_usuario, id_endereco
-    ):
-        comando = f'INSERT INTO usuario_vendedor (cpf_cnpj, data_nascimento, foto_perfil, id_usuario, id_endereco) VALUES ("{cpf_cnpj}", "{data_nascimento}", "{foto_perfil}", "{id_usuario}", "{id_endereco}")'
-
-        self.cursor.execute(comando)
-        self.conexao.commit()
-
     def cadastrar_usuario(self):
         print("Cadastro de usuário:\n")
         self.nome = input("Nome: ")
@@ -90,7 +70,7 @@ class Usuario:
         self.email = input("Email: ")
         self.senha = input("Senha: ")
 
-        self.cadastrar_usuario_comum_banco(
+        self.database.cadastrar_usuario_comum(
             self.nome, self.sobrenome, self.email, self.senha
         )
 
@@ -117,7 +97,7 @@ class Usuario:
             )
             self.ID_endereco = self.cursor.fetchall()[0][0]
 
-            self.cadastrar_usuario_vendedor_banco(
+            self.database.cadastrar_usuario_vendedor(
                 self.cpf_cnpj,
                 self.data_nascimento,
                 self.foto_perfil,

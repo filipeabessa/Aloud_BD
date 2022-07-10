@@ -44,6 +44,26 @@ class Database:
                 f"ID_usuario: {usuario[0]}, Nome: {usuario[1]} {usuario[2]}, Email: {usuario[3]}"
             )
 
+    def cadastrar_usuario_comum(self, nome, sobrenome, email, senha):
+        comando = f'INSERT INTO usuario (nome, sobrenome, email, senha) VALUES ("{nome}", "{sobrenome}", "{email}", "{senha}")'
+
+        self.cursor.execute(comando)
+        self.conexao.commit()
+
+    def cadastrar_usuario_vendedor(
+        self, cpf_cnpj, data_nascimento, foto_perfil, id_usuario, id_endereco
+    ):
+        comando = f'INSERT INTO usuario_vendedor (cpf_cnpj, data_nascimento, foto_perfil, id_usuario, id_endereco) VALUES ("{cpf_cnpj}", "{data_nascimento}", "{foto_perfil}", "{id_usuario}", "{id_endereco}")'
+
+        self.cursor.execute(comando)
+        self.conexao.commit()
+
+    def editar_usuario_comum_banco(self):
+        pass
+
+    def editar_usuario_vendedor_banco(self):
+        pass
+
     def criar_anuncio(
         self,
         cpf_cnpj_vendedor,
