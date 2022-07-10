@@ -110,3 +110,10 @@ class Database:
 
         self.cursor.execute(comando)
         return self.cursor.fetchall()
+
+    def cadastrar_endereco(
+        self, logradouro, numero, complemento, bairro, cidade, UF, cep
+    ):
+        comando = f'INSERT INTO endereco (logradouro, numero, complemento, bairro, cidade, UF, CEP) VALUES ("{logradouro}", "{numero}", "{complemento}", "{bairro}", "{cidade}", "{UF}", "{cep}")'
+        self.cursor.execute(comando)
+        self.conexao.commit()

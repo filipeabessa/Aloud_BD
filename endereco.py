@@ -1,7 +1,8 @@
 class Endereco:
-    def __init__(self, cursor, conexao):
+    def __init__(self, cursor, conexao, database):
         self.cursor = cursor
         self.conexao = conexao
+        self.database = database
 
         self.ID_endereco = 1
         self.logradouro = ""
@@ -10,11 +11,6 @@ class Endereco:
         self.bairro = ""
         self.cidade = ""
         self.UF = ""
-
-    def cadastrar_endereco_banco(self):
-        comando = f'INSERT INTO endereco (logradouro, numero, complemento, bairro, cidade, UF) VALUES ("{self.logradouro}", "{self.numero}", "{self.complemento}", "{self.bairro}", "{self.cidade}", "{self.UF}")'
-        self.cursor.execute(comando)
-        self.conexao.commit()
 
     def editar_endereco_banco(
         self, logradouro, numero, complemento, bairro, cidade, UF
@@ -41,4 +37,12 @@ class Endereco:
         self.UF = input("União federativa: ")
         self.cidade = input("Municipio: ")
 
-        self.cadastrar_endereco_banco()
+        self.database.cadastrar_endereco(
+            self.logradouro,
+            self.numero,
+            self.complemento,
+            self.bairro,
+            self.cidade,
+            self.UF,
+            self.CEP,
+        )
