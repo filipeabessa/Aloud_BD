@@ -1,4 +1,4 @@
-# Projeto BD
+# Aloud - Projeto Banco de Dados 1
 
 #### Grupo:
 * Emanuely Lima;
