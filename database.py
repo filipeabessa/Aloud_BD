@@ -58,11 +58,17 @@ class Database:
         self.cursor.execute(comando)
         self.conexao.commit()
 
-    def editar_usuario_comum_banco(self):
-        pass
+    def editar_usuario_comum(self, ID_usuario, nome, sobrenome, email, senha):
+        comando = f'UPDATE usuario SET nome = "{nome}", sobrenome = "{sobrenome}", email = "{email}", senha = "{senha}" WHERE ID_usuario = "{ID_usuario}"'
 
-    def editar_usuario_vendedor_banco(self):
-        pass
+        self.cursor.execute(comando)
+        self.conexao.commit()
+
+    def editar_usuario_vendedor(self, ID_usuario, data_nascimento, foto_perfil):
+        comando = f'UPDATE usuario_vendedor SET data_nascimento = "{data_nascimento}", foto_perfil = "{foto_perfil}" WHERE ID_usuario = "{ID_usuario}"'
+
+        self.cursor.execute(comando)
+        self.conexao.commit()
 
     def criar_anuncio(
         self,

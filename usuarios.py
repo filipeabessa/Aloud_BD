@@ -36,9 +36,7 @@ class Usuario:
         self.senha = input("Senha: ")
 
         comando = f'SELECT * FROM usuario WHERE email = "{self.email}" AND senha = "{self.senha}"'
-
         self.cursor.execute(comando)
-
         infos_usuario = self.cursor.fetchall()
 
         if len(infos_usuario) > 0:
@@ -113,11 +111,25 @@ class Usuario:
         else:
             return
 
-    def editar_usuario_comum(self, nome, sobrenome, email, senha):
-        self.nome = nome
-        self.sobrenome = sobrenome
-        self.email = email
-        self.senha = senha
+    def editar_usuario_comum(self):
+        print("Edição de usuário:\n")
+        self.nome = input("Nome: ")
+        self.sobrenome = input("Sobrenome: ")
+        self.email = input("Email: ")
+        self.senha = input("Senha: ")
+
+        self.database.editar_usuario_comum(
+            self.ID_usuario, self.nome, self.sobrenome, self.email, self.senha
+        )
+
+    def editar_usuario_vendedor(self):
+        self.editar_usuario_comum()
+        self.data_nascimento = input("Data de nascimento (aaaa-mm-dd): ")
+        self.foto_perfil = input("Foto de perfil (link): ")
+
+        self.database.editar_usuario_vendedor(
+            self.ID_usuario, self.data_nascimento, self.foto_perfil
+        )
 
     def editar_endereco(self):
         self.endereco.editar_endereco(self.ID_endereco)

@@ -17,7 +17,7 @@ cursor = conexao.cursor()
 database = Database(cursor, conexao)
 usuarios = Usuario(cursor, conexao, database)
 anuncios = Anuncio(cursor, conexao, database, usuarios)
-interacoes = Interacoes(usuarios, anuncios)
+interacoes = Interacoes(usuarios, anuncios, usuarios)
 
 interacoes.chamar_boas_vindas()
 while usuarios.verificar_logado() == False:
@@ -25,8 +25,11 @@ while usuarios.verificar_logado() == False:
     if usuarios.verificar_logado() == True:
         break
 
-interacoes.chamar_interacaos_vendedor()
+if usuarios.eh_vendedor == True:
+    interacoes.chamar_menu_vendedor()
 
+else:
+    interacoes.chamar_menu_usuario_comum()
 
 cursor.close()
 conexao.close()
