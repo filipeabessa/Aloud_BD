@@ -131,3 +131,30 @@ class Database:
 
         self.cursor.execute(comando)
         self.conexao.commit()
+
+    def remover_qtd_produto_estoque(
+        self, id_anuncio, quantidade_estoque, quantidade_remocao
+    ):
+        comando = f'UPDATE anuncio SET quantidade_produto = "{quantidade_estoque - quantidade_remocao}" WHERE id_anuncio = "{id_anuncio}"'
+        self.cursor.execute(comando)
+        self.conexao.commit()
+
+    def comprar(
+        self,
+        id_anuncio,
+        id_usuario,
+        id_endereco,
+        carrinho_compras,
+        data_compra,
+        forma_pagamento,
+        modo_envio,
+    ):
+        valor_total = 0
+        for produto in carrinho_compras:
+            valor_total = valor_total + (produto[0] * produto[2])
+            self.remover_qtd_produto_estoque(produto[0], produto[1], produto[2])
+
+        comando = f'INSERT INTO compra (id_anuncio, id_usuario, id_endereco, valor_total, data_compra, forma_de_pag, modo_envio) VALUES ("{id_anuncio}", "{id_usuario}", "{id_endereco}", "{valor_total}", "{data_compra}", "{forma_pagamento}", "{modo_envio}")'
+
+        self.cursor.execute(comando)
+        self.conexao.commit()
