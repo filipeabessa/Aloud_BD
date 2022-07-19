@@ -24,22 +24,28 @@ class Database:
         self.conexao.commit()
 
     def criar_tabela_compra(self):
-        comando = "CREATE TABLE compra (id_compra INT AUTO_INCREMENT PRIMARY KEY, id_usuario INT, FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario), id_endereco INT, FOREIGN KEY (id_endereco) REFERENCES endereco(id_endereco), id_anuncio INT, FOREIGN KEY (id_anuncio) REFERENCES anuncio(id_anuncio), valor_total FLOAT(10,2), data_compra DATE, forma_de_pag VARCHAR(50), modo_envio VARCHAR(50))"
+        comando = "CREATE TABLE compra (id_compra INT AUTO_INCREMENT PRIMARY KEY, id_usuario INT,FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario), id_endereco INT, FOREIGN KEY (id_endereco) REFERENCES endereco(id_endereco), id_anuncio INT, FOREIGN KEY (id_anuncio) REFERENCES anuncio(id_anuncio), valor_total FLOAT(10,2), data_compra DATE, forma_de_pag VARCHAR(50), modo_envio VARCHAR(50))"
         self.cursor.execute(comando)
         self.conexao.commit()
 
-    def criar_tabela_compra_anuncio(self):
-        comando = "CREATE TABLE compra_anuncio (id_compra INT, FOREIGN KEY (id_compra) REFERENCES compra(id_compra), id_anuncio INT, FOREIGN KEY (id_anuncio) REFERENCES anuncio(id_anuncio))"
+    def criar_tabela_item_carrinho(self):
+        comando = "CREATE TABLE item_carrinho (id_item_carrinho INT AUTO_INCREMENT PRIMARY KEY, id_compra INT, FOREIGN KEY (id_compra) REFERENCES compra(id_compra), id_anuncio INT, FOREIGN KEY (id_anuncio) REFERENCES anuncio(id_anuncio), quantidade INT, valor_total FLOAT(10,2))"
+        self.cursor.execute(comando)
+        self.conexao.commit()
+
+    def criar_tabela_carrinho(self):
+        comando = "CREATE TABLE carrinho (id_carrinho INT AUTO_INCREMENT PRIMARY KEY, id_usuario INT, FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario), id_item_carrinho INT, FOREIGN KEY (id_item_carrinho) REFERENCES item_carrinho(id_item_carrinho), quantidade INT, valor_total FLOAT(10,2))"
         self.cursor.execute(comando)
         self.conexao.commit()
 
     def criar_tabelas(self):
-        self.criar_tabela_usuario()
-        self.criar_tabela_endereco()
-        self.criar_tabela_usuario_vendedor()
-        self.criar_tabela_anuncio()
-        self.criar_tabela_compra()
-        self.criar_tabela_compra_anuncio()
+        # self.criar_tabela_usuario()
+        # self.criar_tabela_endereco()
+        # self.criar_tabela_usuario_vendedor()
+        # self.criar_tabela_anuncio()
+        # self.criar_tabela_compra()
+        self.criar_tabela_item_carrinho()
+        self.criar_tabela_carrinho()
 
     def listar_usuarios(self):
         comando = "SELECT * FROM usuario"
@@ -154,7 +160,6 @@ class Database:
 
     def comprar(
         self,
-        id_anuncio,
         id_usuario,
         id_endereco,
         carrinho_compras,
@@ -167,7 +172,7 @@ class Database:
             valor_total = valor_total + (produto[0] * produto[2])
             self.remover_qtd_produto_estoque(produto[0], produto[1], produto[2])
 
-        comando = f'INSERT INTO compra (id_anuncio, id_usuario, id_endereco, valor_total, data_compra, forma_de_pag, modo_envio) VALUES ("{id_anuncio}", "{id_usuario}", "{id_endereco}", "{valor_total}", "{data_compra}", "{forma_pagamento}", "{modo_envio}")'
+        comando = f'INSERT INTO compra (id_usuario, id_endereco, valor_total, data_compra, forma_de_pag, modo_envio) VALUES ("{id_usuario}", "{id_endereco}", "{valor_total}", "{data_compra}", "{forma_pagamento}", "{modo_envio}")'
 
         self.cursor.execute(comando)
         self.conexao.commit()
