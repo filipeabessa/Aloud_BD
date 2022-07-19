@@ -1,4 +1,5 @@
 from endereco import Endereco
+from compras import Compras
 
 
 class Usuario:
@@ -20,6 +21,7 @@ class Usuario:
         self.eh_vendedor = False
 
         self.endereco = Endereco(cursor, conexao, database)
+        self.compras = Compras(cursor, conexao, database)
 
     def __str__(self):
         return self.nome
@@ -133,3 +135,6 @@ class Usuario:
 
     def editar_endereco(self):
         self.endereco.editar_endereco(self.ID_endereco)
+
+    def listar_compras(self):
+        self.compras.listar_compras(self.ID_usuario)
