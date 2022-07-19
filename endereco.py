@@ -15,6 +15,9 @@ class Endereco:
         self.cidade = ""
         self.UF = ""
 
+    def receber_id_endereco(self):
+        return self.ID_endereco
+
     def cadastrar_endereco(self):
         print("Endereço: \n")
         self.CEP = input("CEP: ")
@@ -34,6 +37,7 @@ class Endereco:
             self.UF,
             self.CEP,
         )
+        self.ID_endereco = self.database.receber_ultimo_id_endereco()
 
     def editar_endereco(self, id_endereco):
         print("Endereço: \n")

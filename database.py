@@ -140,6 +140,11 @@ class Database:
         self.cursor.execute(comando)
         self.conexao.commit()
 
+    def receber_ultimo_id_endereco(self):
+        comando = f"SELECT MAX(ID_endereco) FROM endereco"
+        self.cursor.execute(comando)
+        return self.cursor.fetchall()[0][0]
+
     def remover_qtd_produto_estoque(
         self, id_anuncio, quantidade_estoque, quantidade_remocao
     ):

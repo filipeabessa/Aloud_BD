@@ -72,7 +72,8 @@ class Anuncios:
         else:
             return "Usado"
 
-    def buscar_anuncios(self, palavra_chave=""):
+    def buscar_anuncios(self):
+        palavra_chave = input("Digite a palavra chave: ")
         if palavra_chave == "":
             comando = "SELECT * FROM anuncio"
         else:
@@ -82,12 +83,16 @@ class Anuncios:
 
         self.cursor.execute(comando)
         anuncios = self.cursor.fetchall()
-        for anuncio in anuncios:
-            print(
-                f"ID: {anuncio[0]}\nTítulo: {anuncio[2]}\nPreço: {anuncio[4]}\nQuantidade: {anuncio[7]}"
-            )
-            print(f"Estado: {self.formatar_estado_novo_string(anuncio[9])}")
-            print("\n\n\n")
+
+        if anuncios == []:
+            print(f"\n\n\nNenhum anúncio encontrado.\n\n\n")
+        else:
+            for anuncio in anuncios:
+                print(
+                    f"\nID: {anuncio[0]}\nTítulo: {anuncio[2]}\nPreço: {anuncio[4]}\nQuantidade: {anuncio[7]}"
+                )
+                print(f"Estado: {self.formatar_estado_novo_string(anuncio[9])}")
+                print("\n\n\n")
         return
 
     def listar_anuncios_vendedor(self, cpf_cnpj):

@@ -2,9 +2,10 @@ from database import Database
 
 
 class Compras:
-    def __init__(self, cursor, conexao):
+    def __init__(self, cursor, conexao, usuario):
         self.cursor = cursor
         self.conexao = conexao
+        self.usuario = usuario
         self.database = Database(cursor, conexao)
 
     def __str__(self):
@@ -18,7 +19,6 @@ class Compras:
         id_anuncio,
         id_usuario,
         id_endereco,
-        carrinho_compras,
         data_compra,
         forma_pagamento,
         modo_envio,
@@ -27,7 +27,6 @@ class Compras:
             id_anuncio,
             id_usuario,
             id_endereco,
-            carrinho_compras,
             data_compra,
             forma_pagamento,
             modo_envio,
