@@ -33,6 +33,14 @@ class Database:
         self.cursor.execute(comando)
         self.conexao.commit()
 
+    def criar_tabelas(self):
+        self.criar_tabela_usuario()
+        self.criar_tabela_endereco()
+        self.criar_tabela_usuario_vendedor()
+        self.criar_tabela_anuncio()
+        self.criar_tabela_compra()
+        self.criar_tabela_compra_anuncio()
+
     def listar_usuarios(self):
         comando = "SELECT * FROM usuario"
         self.cursor.execute(comando)
@@ -158,3 +166,9 @@ class Database:
 
         self.cursor.execute(comando)
         self.conexao.commit()
+
+    def listar_compras(self, id_usuario):
+        comando = f'SELECT * FROM compra WHERE id_usuario = "{id_usuario}"'
+
+        self.cursor.execute(comando)
+        return self.cursor.fetchall()

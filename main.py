@@ -19,6 +19,7 @@ usuarios = Usuario(cursor, conexao, database)
 anuncios = Anuncio(cursor, conexao, database, usuarios)
 interacoes = Interacoes(usuarios, anuncios, usuarios)
 
+# database.criar_tabelas()
 interacoes.chamar_boas_vindas()
 while usuarios.verificar_logado() == False:
     interacoes.chamar_menu_inicial()
