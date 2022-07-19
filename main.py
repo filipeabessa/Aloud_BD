@@ -1,8 +1,7 @@
 import mysql.connector
 
 from usuarios import Usuario
-from database import Database
-from anuncios import Anuncio
+from anuncios import Anuncios
 from interacoes import Interacoes
 
 conexao = mysql.connector.connect(
@@ -14,19 +13,18 @@ conexao = mysql.connector.connect(
 
 cursor = conexao.cursor()
 
-database = Database(cursor, conexao)
-usuarios = Usuario(cursor, conexao, database)
-anuncios = Anuncio(cursor, conexao, database, usuarios)
-interacoes = Interacoes(usuarios, anuncios, usuarios)
+usuario = Usuario(cursor, conexao)
+anuncios = Anuncios(cursor, conexao, usuario)
+interacoes = Interacoes(cursor, conexao, usuario)
 
 # database.criar_tabelas()
 interacoes.chamar_boas_vindas()
-while usuarios.verificar_logado() == False:
+while usuario.verificar_logado() == False:
     interacoes.chamar_menu_inicial()
-    if usuarios.verificar_logado() == True:
+    if usuario.verificar_logado() == True:
         break
 
-if usuarios.eh_vendedor == True:
+if usuario.eh_vendedor == True:
     interacoes.chamar_menu_vendedor()
 
 else:

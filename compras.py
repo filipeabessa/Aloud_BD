@@ -1,8 +1,11 @@
+from database import Database
+
+
 class Compras:
-    def __init__(self, cursor, conexao, database):
+    def __init__(self, cursor, conexao):
         self.cursor = cursor
         self.conexao = conexao
-        self.database = database
+        self.database = Database(cursor, conexao)
 
     def __str__(self):
         return "Compras"

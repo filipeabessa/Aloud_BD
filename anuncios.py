@@ -1,12 +1,15 @@
-class Anuncio:
-    def __init__(self, cursor, conexao, database, usuarios):
+from database import Database
+
+
+class Anuncios:
+    def __init__(self, cursor, conexao, usuario):
         self.cursor = cursor
         self.conexao = conexao
-        self.database = database
-        self.usuarios = usuarios
+        self.usuario = usuario
+        self.database = Database(cursor, conexao)
 
     def criar_anuncio(self):
-        cpf_cnpj = self.usuarios.cpf_cnpj
+        cpf_cnpj = self.usuario.cpf_cnpj
         titulo_anuncio = input("Digite o título do anúncio: ")
         descricao = input("Digite a descrição do anúncio: ")
         preco = input("Digite o preço do anúncio: ")

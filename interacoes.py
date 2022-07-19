@@ -1,8 +1,10 @@
+from anuncios import Anuncios
+
+
 class Interacoes:
-    def __init__(self, usuarios, anuncios, usuario):
-        self.usuarios = usuarios
-        self.anuncios = anuncios
+    def __init__(self, cursor, conexao, usuario):
         self.usuario = usuario
+        self.anuncios = Anuncios(conexao, cursor, usuario)
 
     def chamar_boas_vindas(self):
         print("Bem-vindo à Aloud! O que você deseja fazer? \n")

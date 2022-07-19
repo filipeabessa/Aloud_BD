@@ -1,12 +1,13 @@
 from endereco import Endereco
 from compras import Compras
+from database import Database
 
 
 class Usuario:
-    def __init__(self, cursor, conexao, database):
+    def __init__(self, cursor, conexao):
         self.cursor = cursor
         self.conexao = conexao
-        self.database = database
+        self.database = Database(cursor, conexao)
 
         self.nome = ""
         self.sobrenome = ""
@@ -20,8 +21,8 @@ class Usuario:
         self.logado = False
         self.eh_vendedor = False
 
-        self.endereco = Endereco(cursor, conexao, database)
-        self.compras = Compras(cursor, conexao, database)
+        self.endereco = Endereco(cursor, conexao)
+        self.compras = Compras(cursor, conexao)
 
     def __str__(self):
         return self.nome

@@ -1,8 +1,11 @@
+from database import Database
+
+
 class Endereco:
-    def __init__(self, cursor, conexao, database):
+    def __init__(self, cursor, conexao):
         self.cursor = cursor
         self.conexao = conexao
-        self.database = database
+        self.database = Database(cursor, conexao)
 
         self.ID_endereco = 1
         self.logradouro = ""
