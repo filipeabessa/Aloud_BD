@@ -227,7 +227,7 @@ class Database:
         valor_total = self.cursor.fetchall()[0][0]
         return valor_total
 
-    def atualizar_valor_total_carrinho(self, valor_atualizado):
-        comando = f'UPDATE carrinho SET valor_total = "{valor_atualizado}"'
+    def atualizar_valor_total_carrinho(self, id_carrinho, valor_atualizado):
+        comando = f'UPDATE carrinho SET valor_total = "{valor_atualizado}" WHERE id_carrinho = "{id_carrinho}"'
         self.cursor.execute(comando)
         self.conexao.commit()

@@ -10,7 +10,7 @@ class Interacoes:
     def __init__(self, cursor, conexao, usuario):
         self.usuario = usuario
         self.anuncios = Anuncios(cursor, conexao, usuario)
-        self.carrinho = Carrinho(cursor, conexao, usuario)
+        self.carrinho = Carrinho(cursor, conexao)
         self.compras = Compras(cursor, conexao, self.carrinho)
         self.endereco = Endereco(cursor, conexao)
         self.sistema_finalizado = False
@@ -30,6 +30,7 @@ class Interacoes:
 
         elif resposta == "2":
             self.usuario.login()
+            self.carrinho.definir_id_usuario(self.usuario.ID_usuario)
 
         elif resposta == "3":
             self.anuncios.buscar_anuncios()

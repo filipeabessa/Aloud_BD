@@ -17,7 +17,6 @@ cursor = conexao.cursor()
 
 database = Database(cursor, conexao)
 usuario = Usuario(cursor, conexao)
-carrinho_compras = Carrinho(cursor, conexao, usuario.ID_usuario)
 anuncios = Anuncios(cursor, conexao, usuario)
 interacoes = Interacoes(cursor, conexao, usuario)
 # database.criar_tabelas()

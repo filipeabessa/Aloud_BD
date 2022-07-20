@@ -21,7 +21,7 @@ class Compras:
         forma_pagamento,
         modo_envio,
     ):
-        valor_total = carrinho_compras.receber_valor_total()
+        valor_total = carrinho_compras.receber_valor_total_carrinho()
         self.database.comprar(
             id_usuario,
             id_endereco,
