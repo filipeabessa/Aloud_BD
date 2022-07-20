@@ -95,7 +95,6 @@ class Interacoes:
             self.carrinho.adicionar_item_carrinho(
                 id_anuncio=id_anuncio,
                 quantidade=qtd_produtos,
-                id_carrinho=self.usuario.ID_carrinho,
             )
 
         elif resposta == "n":

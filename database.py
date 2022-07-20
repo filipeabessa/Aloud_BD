@@ -185,11 +185,6 @@ class Database:
         self.cursor.execute(comando)
         self.conexao.commit()
 
-        comando_2 = f"SELECT MAX(id_carrinho) FROM carrinho"
-        self.cursor.execute(comando_2)
-        id_carrinho_criado = self.cursor.fetchall()
-        return id_carrinho_criado
-
     def adicionar_item_carrinho(
         self, id_carrinho, id_anuncio, quantidade, valor_total_item
     ):
@@ -229,3 +224,9 @@ class Database:
             f'SELECT valor_total FROM carrinho WHERE id_carrinho = "{id_carrinho}"'
         )
         self.cursor.execute(comando)
+
+    def pegar_id_carrinho(self, id_usuario):
+        comando = f'SELECT id_carrinho FROM carrinho WHERE id_usuario = "{id_usuario}"'
+        self.cursor.execute(comando)
+        id_carrinho = self.cursor.fetchall()[0][0]
+        return id_carrinho

@@ -90,7 +90,7 @@ class Usuario:
         self.ID_usuario = self.cursor.fetchall()[0][0]
 
         carrinho = Carrinho(self.cursor, self.conexao, self.ID_usuario)
-        self.ID_carrinho = carrinho.criar_carrinho()
+        carrinho.criar_carrinho()
 
         cadastrar_info_vendedor = input(
             "Deseja anunciar produtos/serviços ou apenas comprar? (se deseja apenas comprar digite 1, e se deseja também anunciar, digite 2) "
