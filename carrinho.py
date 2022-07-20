@@ -8,6 +8,7 @@ class Carrinho:
         self.database = Database(self.cursor, self.conexao)
 
         self.ID_usuario = 0
+        self.ID_carrinho = 0
 
     def __str__(self):
         return "Carrinho"
@@ -34,8 +35,8 @@ class Carrinho:
         return valor_total
 
     def receber_id_carrinho(self):
-        id_carrinho = self.database.pegar_id_carrinho(self.ID_usuario)
-        return id_carrinho
+        self.id_carrinho = self.database.pegar_id_carrinho(self.ID_usuario)
+        return self.id_carrinho
 
     def atualizar_valor_total_carrinho(self, ID_carrinho, valor_a_atualizar):
         valor_total_atual_carrinho = self.receber_valor_total_carrinho()

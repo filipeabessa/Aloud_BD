@@ -25,6 +25,7 @@ class Compras:
         self.database.comprar(
             id_usuario,
             id_endereco,
+            carrinho_compras.ID_carrinho,
             valor_total,
             data_compra,
             forma_pagamento,

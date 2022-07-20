@@ -24,7 +24,7 @@ class Database:
         self.conexao.commit()
 
     def criar_tabela_compra(self):
-        comando = "CREATE TABLE compra (id_compra INT AUTO_INCREMENT PRIMARY KEY, id_usuario INT,FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario), id_endereco INT, FOREIGN KEY (id_endereco) REFERENCES endereco(id_endereco), id_anuncio INT, FOREIGN KEY (id_anuncio) REFERENCES anuncio(id_anuncio), valor_total FLOAT(10,2), data_compra DATE, forma_de_pag VARCHAR(50), modo_envio VARCHAR(50))"
+        comando = "CREATE TABLE compra (id_compra INT AUTO_INCREMENT PRIMARY KEY, id_usuario INT,FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario), id_endereco INT, FOREIGN KEY (id_endereco) REFERENCES endereco(id_endereco), id_carrinho INT, FOREIGN KEY (id_carrinho) REFERENCES carrinho(id_carrinho), valor_total FLOAT(10,2), data_compra DATE, forma_de_pag VARCHAR(50), modo_envio VARCHAR(50))"
         self.cursor.execute(comando)
         self.conexao.commit()
 
@@ -39,11 +39,11 @@ class Database:
         self.conexao.commit()
 
     def criar_tabelas(self):
-        # self.criar_tabela_usuario()
-        # self.criar_tabela_endereco()
-        # self.criar_tabela_usuario_vendedor()
-        # self.criar_tabela_anuncio()
-        # self.criar_tabela_compra()
+        self.criar_tabela_usuario()
+        self.criar_tabela_endereco()
+        self.criar_tabela_usuario_vendedor()
+        self.criar_tabela_anuncio()
+        self.criar_tabela_compra()
         self.criar_tabela_carrinho()
         self.criar_tabela_item_carrinho()
 
@@ -162,13 +162,14 @@ class Database:
         self,
         id_usuario,
         id_endereco,
+        id_carrinho,
         valor_total,
         data_compra,
         forma_pagamento,
         modo_envio,
     ):
 
-        comando = f'INSERT INTO compra (id_usuario, id_endereco, valor_total, data_compra, forma_de_pag, modo_envio) VALUES ("{id_usuario}", "{id_endereco}", "{valor_total}", "{data_compra}", "{forma_pagamento}", "{modo_envio}")'
+        comando = f'INSERT INTO compra (id_usuario, id_endereco, id_carrinho valor_total, data_compra, forma_de_pag, modo_envio) VALUES ("{id_usuario}", "{id_endereco}", "{id_carrinho}", "{valor_total}", "{data_compra}", "{forma_pagamento}", "{modo_envio}")'
 
         self.cursor.execute(comando)
         self.conexao.commit()
