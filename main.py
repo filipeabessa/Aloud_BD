@@ -3,6 +3,8 @@ import mysql.connector
 from usuarios import Usuario
 from anuncios import Anuncios
 from interacoes import Interacoes
+from carrinho import Carrinho
+from database import Database
 
 conexao = mysql.connector.connect(
     host="localhost",
@@ -13,7 +15,9 @@ conexao = mysql.connector.connect(
 
 cursor = conexao.cursor()
 
+database = Database(cursor, conexao)
 usuario = Usuario(cursor, conexao)
+carrinho_compras = Carrinho(cursor, conexao, usuario.ID_usuario)
 anuncios = Anuncios(cursor, conexao, usuario)
 interacoes = Interacoes(cursor, conexao, usuario)
 

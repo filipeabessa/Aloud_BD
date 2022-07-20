@@ -1,6 +1,7 @@
 from anuncios import Anuncios
 from compras import Compras
-from endereco import Endereco, cep
+from endereco import Endereco
+from carrinho import Carrinho
 
 import datetime
 
@@ -9,7 +10,8 @@ class Interacoes:
     def __init__(self, cursor, conexao, usuario):
         self.usuario = usuario
         self.anuncios = Anuncios(cursor, conexao, usuario)
-        self.compras = Compras(cursor, conexao)
+        self.carrinho = Carrinho(cursor, conexao, usuario)
+        self.compras = Compras(cursor, conexao, self.carrinho)
         self.endereco = Endereco(cursor, conexao)
 
     def chamar_boas_vindas(self):
@@ -43,6 +45,8 @@ class Interacoes:
 
         elif resposta == "3":
             self.anuncios.buscar_anuncios()
+            self.perguntar_quer_adicionar_carrinho()
+            self.perguntar_quer_finalizar_compra()
 
         elif resposta == "4":
             self.anuncios.listar_anuncios_vendedor(self.usuario.receber_cpf_cnpj())
@@ -64,6 +68,8 @@ class Interacoes:
         resposta = input("1 - Buscar produtos/serviços\n2 - Editar usuário\n3 - Sair\n")
         if resposta == "1":
             self.anuncios.buscar_anuncios()
+            self.perguntar_quer_adicionar_carrinho()
+            self.perguntar_quer_finalizar_compra()
 
         elif resposta == "2":
             self.usuario.editar_usuario_comum()
@@ -72,40 +78,46 @@ class Interacoes:
             print("\nObrigado por usar a Aloud!")
             return
 
-    def perguntar_quer_comprar(self):
-        resposta = input("Deseja comprar algum produto/serviço? (s/n) ")
+    def perguntar_quer_adicionar_carrinho(self):
+        resposta = input("Deseja adicionar algum produto ao carrinho? (s/n) ")
         if resposta == "s":
             id_anuncio = input("Digite o ID do anúncio que deseja comprar: ")
             qtd_produtos = input(
                 "Digite a quantidade de produtos do anúncio que deseja comprar: "
             )
-            forma_pagamento = input(
-                "Digite a forma de pagamento ('p' para paypal e 'm' para mercadopago): "
+            self.carrinho.adicionar_item_carrinho(
+                id_anuncio=id_anuncio,
+                quantidade=qtd_produtos,
+                id_carrinho=self.usuario.ID_carrinho,
             )
-            if forma_pagamento == "p":
-                forma_pagamento = "paypal"
-            elif forma_pagamento == "m":
-                forma_pagamento = "mercadopago"
 
-            modo_envio = input(
-                "Digite o modo de envio ('c' para Correios e 'r' para Rapidão Cometa): "
-            )
-            if modo_envio == "c":
-                modo_envio = "correios"
-            elif modo_envio == "r":
-                modo_envio = "rapidao"
-
-            self.endereco.cadastrar_endereco()
-            id_endereco = self.endereco.receber_id_endereco()
-            data_compra = datetime.datetime.now()
-
-            self.compras.comprar(
-                id_anuncio,
-                qtd_produtos,
-                forma_pagamento,
-                modo_envio,
-                id_endereco,
-                data_compra,
-            )
         elif resposta == "n":
             self.chamar_menu_usuario_comum()
+
+    def perguntar_quer_finalizar_compra(self):
+        forma_pagamento = input(
+            "Digite a forma de pagamento ('p' para paypal e 'm' para mercadopago): "
+        )
+        if forma_pagamento == "p":
+            forma_pagamento = "paypal"
+        elif forma_pagamento == "m":
+            forma_pagamento = "mercadopago"
+        modo_envio = input(
+            "Digite o modo de envio ('c' para Correios e 'r' para Rapidão Cometa): "
+        )
+        if modo_envio == "c":
+            modo_envio = "correios"
+        elif modo_envio == "r":
+            modo_envio = "rapidao"
+        self.endereco.cadastrar_endereco()
+        id_endereco = self.endereco.receber_id_endereco()
+        data_compra = datetime.datetime.now()
+
+        self.compras.comprar(
+            id_usuario=self.usuario.ID_usuario,
+            carrinho_compras=self.carrinho,
+            data_compra=data_compra,
+            forma_pagamento=forma_pagamento,
+            id_endereco=id_endereco,
+            modo_envio=modo_envio,
+        )

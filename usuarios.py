@@ -1,6 +1,8 @@
 from endereco import Endereco
-from compras import Compras
+
+# from compras import Compras
 from database import Database
+from carrinho import Carrinho
 
 
 class Usuario:
@@ -20,9 +22,10 @@ class Usuario:
         self.foto_perfil = ""
         self.logado = False
         self.eh_vendedor = False
+        self.ID_carrinho = 0
 
         self.endereco = Endereco(cursor, conexao)
-        self.compras = Compras(cursor, conexao)
+        # self.compras = Compras(cursor, conexao)
 
     def __str__(self):
         return self.nome
@@ -66,6 +69,9 @@ class Usuario:
 
             print("\nLogin realizado com sucesso!\n")
             self.logado = True
+            carrinho = Carrinho(self.cursor, self.conexao, self.ID_usuario)
+            self.ID_carrinho = carrinho.criar_carrinho()
+
         else:
             print("\nEmail ou senha incorretos!\n")
 
@@ -137,5 +143,5 @@ class Usuario:
     def editar_endereco(self):
         self.endereco.editar_endereco(self.ID_endereco)
 
-    def listar_compras(self):
-        self.compras.listar_compras(self.ID_usuario)
+    # def listar_compras(self):
+    #     self.compras.listar_compras(self.ID_usuario)

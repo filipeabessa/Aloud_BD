@@ -14,7 +14,6 @@ class Compras:
 
     def comprar(
         self,
-        id_anuncio,
         id_usuario,
         id_endereco,
         carrinho_compras,
@@ -24,8 +23,6 @@ class Compras:
     ):
         valor_total = carrinho_compras.receber_valor_total()
         self.database.comprar(
-            self,
-            id_anuncio,
             id_usuario,
             id_endereco,
             valor_total,

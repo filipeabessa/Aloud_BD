@@ -29,7 +29,7 @@ class Database:
         self.conexao.commit()
 
     def criar_tabela_item_carrinho(self):
-        comando = "CREATE TABLE item_carrinho (id_item_carrinho INT AUTO_INCREMENT PRIMARY KEY, id_carrinho INT, FOREIGN KEY (id_carrinho) REFERENCES carrinho(id_carrinho), id_anuncio INT, FOREIGN KEY (id_anuncio) REFERENCES anuncio(id_anuncio), valor_total FLOAT(10,2))"
+        comando = "CREATE TABLE item_carrinho (id_item_carrinho INT AUTO_INCREMENT PRIMARY KEY, id_carrinho INT, FOREIGN KEY (id_carrinho) REFERENCES carrinho(id_carrinho), id_anuncio INT, FOREIGN KEY (id_anuncio) REFERENCES anuncio(id_anuncio), quantidade INT, valor_total FLOAT(10,2))"
         self.cursor.execute(comando)
         self.conexao.commit()
 
@@ -185,19 +185,25 @@ class Database:
         self.cursor.execute(comando)
         self.conexao.commit()
 
+        comando_2 = f"SELECT MAX(id_carrinho) FROM carrinho"
+        self.cursor.execute(comando_2)
+        id_carrinho_criado = self.cursor.fetchall()
+        return id_carrinho_criado
+
     def adicionar_item_carrinho(
         self, id_carrinho, id_anuncio, quantidade, valor_total_item
     ):
-        comando = f'INSERT INTO into_carrinho (id_carrinho, id_anuncio, quantidade, valor_total) VALUES ("{id_carrinho}", "{id_anuncio}", "{quantidade}", "{valor_total_item}")'
+        comando = f'INSERT INTO item_carrinho (id_carrinho, id_anuncio, quantidade, valor_total) VALUES ("{id_carrinho}", "{id_anuncio}", "{quantidade}", "{valor_total_item}")'
         self.cursor.execute(comando)
         self.conexao.commit()
 
         # buscar valor_total atual do carrinho
         comando2 = (
-            f'SELECT valor_total FROM into_carrinho WHERE id_carrinho = "{id_carrinho}"'
+            f'SELECT valor_total FROM carrinho WHERE id_carrinho = "{id_carrinho}"'
         )
         self.cursor.execute(comando2)
-        valor_total_carrinho = self.conexao.fetchall()
+        valor_total_carrinho = self.cursor.fetchall()[0][0]
+        print(valor_total_carrinho)
 
         # atualizar valor_total do carrinho
         comando3 = f'UPDATE carrinho SET valor_total = "{valor_total_carrinho + valor_total_item}" WHERE id_carrinho = "{id_carrinho}"'
