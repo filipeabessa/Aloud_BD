@@ -203,7 +203,6 @@ class Database:
         )
         self.cursor.execute(comando2)
         valor_total_carrinho = self.cursor.fetchall()[0][0]
-        print(valor_total_carrinho)
 
         # atualizar valor_total do carrinho
         comando3 = f'UPDATE carrinho SET valor_total = "{valor_total_carrinho + valor_total_item}" WHERE id_carrinho = "{id_carrinho}"'
@@ -214,7 +213,19 @@ class Database:
         if eh_vendedor:
             comando = f'SELECT * FROM usuario INNER JOIN usuario_vendedor ON usuario.id_usuario = usuario_vendedor.id_usuario WHERE usuario.id_usuario = "{id_usuario}"'
         else:
-            comando = f'SELECT * FROM comprador WHERE id_usuario = "{id_usuario}"'
+            comando = f'SELECT * FROM usuario WHERE id_usuario = "{id_usuario}"'
         self.cursor.execute(comando)
         informacoes_usuario = self.cursor.fetchall()
         return informacoes_usuario
+
+    def pegar_preco_anuncio(self, id_anuncio):
+        comando = f'SELECT preco FROM anuncio WHERE id_anuncio = "{id_anuncio}"'
+        self.cursor.execute(comando)
+        preco_anuncio = self.cursor.fetchall()[0][0]
+        return preco_anuncio
+
+    def pegar_valor_total_carrinho(self, id_carrinho):
+        comando = (
+            f'SELECT valor_total FROM carrinho WHERE id_carrinho = "{id_carrinho}"'
+        )
+        self.cursor.execute(comando)

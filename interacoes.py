@@ -13,6 +13,7 @@ class Interacoes:
         self.carrinho = Carrinho(cursor, conexao, usuario)
         self.compras = Compras(cursor, conexao, self.carrinho)
         self.endereco = Endereco(cursor, conexao)
+        self.sistema_finalizado = False
 
     def chamar_boas_vindas(self):
         print("Bem-vindo à Aloud! O que você deseja fazer? \n")
@@ -64,8 +65,7 @@ class Interacoes:
             self.usuario.visualizar_informacoes_perfil()
 
         elif resposta == "9":
-            print("\nObrigado por usar a Aloud!")
-            return
+            self.finalizar_sistema()
 
     def chamar_menu_usuario_comum(self):
         resposta = input(
@@ -83,8 +83,7 @@ class Interacoes:
             self.usuario.visualizar_informacoes_perfil()
 
         elif resposta == "4":
-            print("\nObrigado por usar a Aloud!")
-            return
+            self.finalizar_sistema()
 
     def perguntar_quer_adicionar_carrinho(self):
         resposta = input("Deseja adicionar algum produto ao carrinho? (s/n) ")
@@ -129,3 +128,7 @@ class Interacoes:
             id_endereco=id_endereco,
             modo_envio=modo_envio,
         )
+
+    def finalizar_sistema(self):
+        print("\nObrigado por usar a Aloud!")
+        self.sistema_finalizado = True

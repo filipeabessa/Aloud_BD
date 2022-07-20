@@ -69,8 +69,6 @@ class Usuario:
 
             print("\nLogin realizado com sucesso!\n")
             self.logado = True
-            carrinho = Carrinho(self.cursor, self.conexao, self.ID_usuario)
-            self.ID_carrinho = carrinho.criar_carrinho()
 
         else:
             print("\nEmail ou senha incorretos!\n")
@@ -90,6 +88,9 @@ class Usuario:
             f"SELECT MAX(id_usuario) FROM {self.conexao.database}.usuario"
         )
         self.ID_usuario = self.cursor.fetchall()[0][0]
+
+        carrinho = Carrinho(self.cursor, self.conexao, self.ID_usuario)
+        self.ID_carrinho = carrinho.criar_carrinho()
 
         cadastrar_info_vendedor = input(
             "Deseja anunciar produtos/serviços ou apenas comprar? (se deseja apenas comprar digite 1, e se deseja também anunciar, digite 2) "
@@ -151,13 +152,15 @@ class Usuario:
             informacoes_usuario = self.database.pegar_informacoes_perfil(
                 self.ID_usuario, True
             )
+            informacoes_usuario = informacoes_usuario[0]
+            print(f"\nNome: {informacoes_usuario[1]} {informacoes_usuario[2]}")
+            print(f"Email: {informacoes_usuario[3]}")
+            print(f"Data de nascimento: {informacoes_usuario[6]}\n")
 
         else:
             informacoes_usuario = self.database.pegar_informacoes_perfil(
                 self.ID_usuario, False
             )
-
-        informacoes_usuario = informacoes_usuario[0]
-        print(f"Nome: {informacoes_usuario[1]} {informacoes_usuario[2]}")
-        print(f"Email: {informacoes_usuario[3]}")
-        print(f"Data de nascimento: {informacoes_usuario[6]}")
+            informacoes_usuario = informacoes_usuario[0]
+            print(f"\nNome: {informacoes_usuario[1]} {informacoes_usuario[2]}")
+            print(f"Email: {informacoes_usuario[3]}\n")

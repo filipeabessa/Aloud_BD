@@ -93,7 +93,6 @@ class Anuncios:
                 )
                 print(f"Estado: {self.formatar_estado_novo_string(anuncio[9])}")
                 print("\n\n\n")
-        return
 
     def listar_anuncios_vendedor(self, cpf_cnpj):
         print("Seus anúncios:\n")

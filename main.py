@@ -20,19 +20,20 @@ usuario = Usuario(cursor, conexao)
 carrinho_compras = Carrinho(cursor, conexao, usuario.ID_usuario)
 anuncios = Anuncios(cursor, conexao, usuario)
 interacoes = Interacoes(cursor, conexao, usuario)
-
 # database.criar_tabelas()
+
 interacoes.chamar_boas_vindas()
 while usuario.verificar_logado() == False:
     interacoes.chamar_menu_inicial()
     if usuario.verificar_logado() == True:
         break
 
-if usuario.eh_vendedor == True:
-    interacoes.chamar_menu_vendedor()
+while interacoes.sistema_finalizado == False:
+    if usuario.eh_vendedor == True:
+        interacoes.chamar_menu_vendedor()
 
-else:
-    interacoes.chamar_menu_usuario_comum()
+    else:
+        interacoes.chamar_menu_usuario_comum()
 
 cursor.close()
 conexao.close()

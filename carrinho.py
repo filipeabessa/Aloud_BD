@@ -15,8 +15,7 @@ class Carrinho:
         return "Carrinho"
 
     def adicionar_item_carrinho(self, id_anuncio, quantidade, id_carrinho):
-        # TODO receber preco anuncio do banco
-        preco_anuncio = 0
+        preco_anuncio = float(self.database.pegar_preco_anuncio(id_anuncio))
         valor_total_item = preco_anuncio * int(quantidade)
         self.carrinho.append((id_anuncio, quantidade, preco_anuncio))
         self.valor_total += valor_total_item
