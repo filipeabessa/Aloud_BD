@@ -192,18 +192,6 @@ class Database:
         self.cursor.execute(comando)
         self.conexao.commit()
 
-        # buscar valor_total atual do carrinho
-        comando2 = (
-            f'SELECT valor_total FROM carrinho WHERE id_carrinho = "{id_carrinho}"'
-        )
-        self.cursor.execute(comando2)
-        valor_total_carrinho = self.cursor.fetchall()[0][0]
-
-        # atualizar valor_total do carrinho
-        comando3 = f'UPDATE carrinho SET valor_total = "{valor_total_carrinho + valor_total_item}" WHERE id_carrinho = "{id_carrinho}"'
-        self.cursor.execute(comando3)
-        self.conexao.commit()
-
     def pegar_informacoes_perfil(self, id_usuario, eh_vendedor):
         if eh_vendedor:
             comando = f'SELECT * FROM usuario INNER JOIN usuario_vendedor ON usuario.id_usuario = usuario_vendedor.id_usuario WHERE usuario.id_usuario = "{id_usuario}"'
@@ -230,3 +218,16 @@ class Database:
         self.cursor.execute(comando)
         id_carrinho = self.cursor.fetchall()[0][0]
         return id_carrinho
+
+    def pegar_valor_total_carrinho(self, id_carrinho):
+        comando = (
+            f'SELECT valor_total FROM carrinho WHERE id_carrinho = "{id_carrinho}"'
+        )
+        self.cursor.execute(comando)
+        valor_total = self.cursor.fetchall()[0][0]
+        return valor_total
+
+    def atualizar_valor_total_carrinho(self, valor_atualizado):
+        comando = f'UPDATE carrinho SET valor_total = "{valor_atualizado}"'
+        self.cursor.execute(comando)
+        self.conexao.commit()
