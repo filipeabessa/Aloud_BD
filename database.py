@@ -29,12 +29,12 @@ class Database:
         self.conexao.commit()
 
     def criar_tabela_item_carrinho(self):
-        comando = "CREATE TABLE item_carrinho (id_item_carrinho INT AUTO_INCREMENT PRIMARY KEY, id_compra INT, FOREIGN KEY (id_compra) REFERENCES compra(id_compra), id_anuncio INT, FOREIGN KEY (id_anuncio) REFERENCES anuncio(id_anuncio), quantidade INT, valor_total FLOAT(10,2))"
+        comando = "CREATE TABLE item_carrinho (id_item_carrinho INT AUTO_INCREMENT PRIMARY KEY, id_carrinho INT, FOREIGN KEY (id_carrinho) REFERENCES carrinho(id_carrinho), id_anuncio INT, FOREIGN KEY (id_anuncio) REFERENCES anuncio(id_anuncio), valor_total FLOAT(10,2))"
         self.cursor.execute(comando)
         self.conexao.commit()
 
     def criar_tabela_carrinho(self):
-        comando = "CREATE TABLE carrinho (id_carrinho INT AUTO_INCREMENT PRIMARY KEY, id_usuario INT, FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario), id_item_carrinho INT, FOREIGN KEY (id_item_carrinho) REFERENCES item_carrinho(id_item_carrinho), quantidade INT, valor_total FLOAT(10,2))"
+        comando = "CREATE TABLE carrinho (id_carrinho INT AUTO_INCREMENT PRIMARY KEY, id_usuario INT, FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario), valor_total FLOAT(10,2))"
         self.cursor.execute(comando)
         self.conexao.commit()
 
@@ -44,8 +44,8 @@ class Database:
         # self.criar_tabela_usuario_vendedor()
         # self.criar_tabela_anuncio()
         # self.criar_tabela_compra()
-        self.criar_tabela_item_carrinho()
         self.criar_tabela_carrinho()
+        self.criar_tabela_item_carrinho()
 
     def listar_usuarios(self):
         comando = "SELECT * FROM usuario"
@@ -182,3 +182,14 @@ class Database:
 
         self.cursor.execute(comando)
         return self.cursor.fetchall()
+
+    def adicionar_item_carrinho(self, id_carrinho, id_anuncio, quantidade, valor_total):
+        comando = f'INSERT INTO into_carrinho (id_carrinho, id_anuncio, quantidade, valor_total) VALUES ("{id_carrinho}", "{id_anuncio}", "{quantidade}", "{valor_total}")'
+        self.cursor.execute(comando)
+        self.conexao.commit()
+
+    def adicionar_carrinho(self, id_usuario):
+        valor_total = 0
+        comando = f'INSERT INTO carrinho (id_usuario, valor_total) VALUES ("{id_usuario}", "{valor_total}")'
+        self.cursor.execute(comando)
+        self.conexao.commit()
