@@ -183,13 +183,27 @@ class Database:
         self.cursor.execute(comando)
         return self.cursor.fetchall()
 
-    def adicionar_item_carrinho(self, id_carrinho, id_anuncio, quantidade, valor_total):
-        comando = f'INSERT INTO into_carrinho (id_carrinho, id_anuncio, quantidade, valor_total) VALUES ("{id_carrinho}", "{id_anuncio}", "{quantidade}", "{valor_total}")'
-        self.cursor.execute(comando)
-        self.conexao.commit()
-
-    def adicionar_carrinho(self, id_usuario):
+    def criar_carrinho(self, id_usuario):
         valor_total = 0
         comando = f'INSERT INTO carrinho (id_usuario, valor_total) VALUES ("{id_usuario}", "{valor_total}")'
         self.cursor.execute(comando)
+        self.conexao.commit()
+
+    def adicionar_item_carrinho(
+        self, id_carrinho, id_anuncio, quantidade, valor_total_item
+    ):
+        comando = f'INSERT INTO into_carrinho (id_carrinho, id_anuncio, quantidade, valor_total) VALUES ("{id_carrinho}", "{id_anuncio}", "{quantidade}", "{valor_total_item}")'
+        self.cursor.execute(comando)
+        self.conexao.commit()
+
+        # buscar valor_total atual do carrinho
+        comando2 = (
+            f'SELECT valor_total FROM into_carrinho WHERE id_carrinho = "{id_carrinho}"'
+        )
+        self.cursor.execute(comando2)
+        valor_total_carrinho = self.conexao.fetchall()
+
+        # atualizar valor_total do carrinho
+        comando3 = f'UPDATE carrinho SET valor_total = "{valor_total_carrinho + valor_total_item}" WHERE id_carrinho = "{id_carrinho}"'
+        self.cursor.execute(comando3)
         self.conexao.commit()
