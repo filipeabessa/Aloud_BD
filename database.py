@@ -209,3 +209,12 @@ class Database:
         comando3 = f'UPDATE carrinho SET valor_total = "{valor_total_carrinho + valor_total_item}" WHERE id_carrinho = "{id_carrinho}"'
         self.cursor.execute(comando3)
         self.conexao.commit()
+
+    def pegar_informacoes_perfil(self, id_usuario, eh_vendedor):
+        if eh_vendedor:
+            comando = f'SELECT * FROM usuario INNER JOIN usuario_vendedor ON usuario.id_usuario = usuario_vendedor.id_usuario WHERE usuario.id_usuario = "{id_usuario}"'
+        else:
+            comando = f'SELECT * FROM comprador WHERE id_usuario = "{id_usuario}"'
+        self.cursor.execute(comando)
+        informacoes_usuario = self.cursor.fetchall()
+        return informacoes_usuario

@@ -145,3 +145,19 @@ class Usuario:
 
     # def listar_compras(self):
     #     self.compras.listar_compras(self.ID_usuario)
+
+    def visualizar_informacoes_perfil(self):
+        if self.eh_vendedor:
+            informacoes_usuario = self.database.pegar_informacoes_perfil(
+                self.ID_usuario, True
+            )
+
+        else:
+            informacoes_usuario = self.database.pegar_informacoes_perfil(
+                self.ID_usuario, False
+            )
+
+        informacoes_usuario = informacoes_usuario[0]
+        print(f"Nome: {informacoes_usuario[1]} {informacoes_usuario[2]}")
+        print(f"Email: {informacoes_usuario[3]}")
+        print(f"Data de nascimento: {informacoes_usuario[6]}")

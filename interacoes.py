@@ -35,7 +35,7 @@ class Interacoes:
 
     def chamar_menu_vendedor(self):
         resposta = input(
-            "1 - Criar anuncio\n2 - Editar Anuncio\n3 - Buscar produtos/serviços\n4 - Visualizar meus anuncios\n5 - Excluir anuncio\n6 - Editar endereco\n7 - Editar usuário\n8 - Sair\n"
+            "1 - Criar anuncio\n2 - Editar Anuncio\n3 - Buscar produtos/serviços\n4 - Visualizar meus anuncios\n5 - Excluir anuncio\n6 - Editar endereco\n7 - Editar usuário\n8 - Visualizar informações de perfil\n9 - Sair\n"
         )
         if resposta == "1":
             self.anuncios.criar_anuncio()
@@ -61,11 +61,16 @@ class Interacoes:
             self.usuario.editar_usuario_vendedor()
 
         elif resposta == "8":
+            self.usuario.visualizar_informacoes_perfil()
+
+        elif resposta == "9":
             print("\nObrigado por usar a Aloud!")
             return
 
     def chamar_menu_usuario_comum(self):
-        resposta = input("1 - Buscar produtos/serviços\n2 - Editar usuário\n3 - Sair\n")
+        resposta = input(
+            "1 - Buscar produtos/serviços\n2 - Editar usuário\n3 - Visualizar informações de perfil\n4 - Sair\n"
+        )
         if resposta == "1":
             self.anuncios.buscar_anuncios()
             self.perguntar_quer_adicionar_carrinho()
@@ -75,6 +80,9 @@ class Interacoes:
             self.usuario.editar_usuario_comum()
 
         elif resposta == "3":
+            self.usuario.visualizar_informacoes_perfil()
+
+        elif resposta == "4":
             print("\nObrigado por usar a Aloud!")
             return
 
