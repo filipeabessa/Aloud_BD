@@ -38,5 +38,6 @@ O projeto foi estruturado criando classes para as tabelas:
 * Endereco
 * Anuncios
 * Compras
+* Carrinho
 
 As classes citadas anteriormente são instanciadas no arquivo main.py. Além disso, foi criada uma classe Database, utilizada para modularizar as interações com o banco, no arquivo database.py, e uma classe Interacoes, no arquivo interacoes.py, onde são implementados os métodos de interações com o sistema, que explicarão para o usuário como ele pode interagir com o sistema e que dados precisam ser inseridos dependendo da solicitação feita pelo usuário.
